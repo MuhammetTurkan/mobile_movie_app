@@ -68,6 +68,7 @@ export default function Search() {
                 placeholder="Search movies.."
                 value={searchQuery}
                 onChangeText={(text: string) => setSearchQuery(text)}
+                deletePress={() => setSearchQuery("")}
               />
             </View>
 
