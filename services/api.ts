@@ -49,3 +49,25 @@ export const fetchMovieDetails = async (
     throw err;
   }
 };
+
+export const fetchTopRatedMovies = async (): Promise<Movie | null> => {
+  try {
+    const response = await fetch(
+      `${TMDB_CONFIG.BASE_URL}/movie/top_rated?api_key=${TMDB_CONFIG.API_KEY}`,
+      {
+        method: "GET",
+        headers: TMDB_CONFIG.headers,
+      }
+    );
+    if (!response.ok) {
+      //@ts-ignore
+      throw new Error("Failed the fetch movies", response.statusText);
+    }
+
+    const data = await response.json();
+    return data.results;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};

@@ -75,3 +75,16 @@ interface TrendingCardProps {
   movie: TrendingMovie;
   index: number;
 }
+
+interface TopRatedMovies {
+  adult: boolean;
+  backdrop_path: string;
+  id: number;
+  original_language: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  vote_average: number;
+  vote_count: number;
+}

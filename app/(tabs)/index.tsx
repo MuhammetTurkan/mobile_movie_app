@@ -11,8 +11,9 @@ import { icons } from "@/constants/icons";
 import SearchBar from "@/components/SearchBar";
 import { useRouter } from "expo-router";
 import useFetch from "@/services/useFetch";
-import { fetchMovies } from "@/services/api";
+import { fetchMovies, fetchTopRatedMovies } from "@/services/api";
 import MovieCard from "@/components/MovieCard";
+import TopMovieCard from "@/components/TopMovieCard";
 
 export default function Index() {
   const router = useRouter();
@@ -22,6 +23,10 @@ export default function Index() {
     loading: moviesLoading,
     error: moviesError,
   } = useFetch(() => fetchMovies({ query: "" }));
+
+  const { data: topRatedMovies, loading: topMoviesLoadding } = useFetch(() =>
+    fetchTopRatedMovies()
+  );
 
   return (
     <View className="flex-1 bg-primary">
@@ -52,6 +57,21 @@ export default function Index() {
             />
 
             <>
+              <Text className="text-lg text-white font-bold mt-5 mb-3">
+                Top Rated Movies
+              </Text>
+
+              <FlatList
+                data={topRatedMovies}
+                renderItem={({ item, index }) => (
+                  <TopMovieCard movie={item} index={index} />
+                )}
+                keyExtractor={(item) => item.id.toString()}
+                horizontal
+                showsVerticalScrollIndicator={false}
+                className="mb-4 mt-3"
+                ItemSeparatorComponent={() => <View className="w-4" />}
+              />
               <Text className="text-lg text-white font-bold mt-5 mb-3">
                 Latest Movies
               </Text>
