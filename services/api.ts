@@ -71,3 +71,27 @@ export const fetchTopRatedMovies = async (): Promise<Movie | null> => {
     throw err;
   }
 };
+
+export const fetchFavoriteMovies = async (
+  account_id: string
+): Promise<Movie> => {
+  try {
+    const response = await fetch(
+      `${TMDB_CONFIG.BASE_URL}/account/${account_id}/favorite/movies?api_key=${TMDB_CONFIG.API_KEY}`,
+      {
+        method: "GET",
+        headers: TMDB_CONFIG.headers,
+      }
+    );
+
+    if (!response.ok) {
+      //@ts-ignore
+      throw new Error("Failed the fetch movie", response.statusText);
+    }
+
+    const data = await response.json();
+    return data.results;
+  } catch (err) {
+    throw err;
+  }
+};

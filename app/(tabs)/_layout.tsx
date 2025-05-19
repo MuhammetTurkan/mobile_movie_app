@@ -73,15 +73,15 @@ export default function _Layout() {
         }}
       />
       <Tabs.Screen
-        name="saved"
+        name="favorites"
         options={{
-          title: "Saved",
+          title: "Favorites",
           tabBarIcon: ({ focused }) => (
             <>
               <TabIcon
                 focused={focused}
-                title="Saved"
-                iconName={"bookmark-border"}
+                title="Favorites"
+                iconName={"favorite-outline"}
               />
             </>
           ),
