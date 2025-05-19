@@ -29,12 +29,8 @@ export default function Favorites() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ minHeight: "100%", paddingBottom: 100 }}
       >
-        <Image source={icons.logo} className="w-12 h-10 mt-20 mb-5 mx-auto" />
+        <Image source={icons.logo} className="w-12 h-10 mt-20 mb-1 mx-auto" />
         <View className="flex-1 mt-5">
-          <SearchBar
-            placeholder="Search for a movie"
-            onPress={() => router.push("/search")}
-          />
           <Text className="text-lg text-white font-bold mt-5 mb-3">
             Favorite Movies
           </Text>
