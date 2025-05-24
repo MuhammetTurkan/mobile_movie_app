@@ -95,3 +95,62 @@ export const fetchFavoriteMovies = async (
     throw err;
   }
 };
+
+export const addFavoriteList = async (media_id: string) => {
+  const options = {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+      Authorization: `Bearer ${process.env.EXPO_PUBLIC_MOVIE_API_KEY}`,
+    },
+    body: JSON.stringify({
+      media_type: "movie",
+      media_id: media_id,
+      favorite: true,
+    }),
+  };
+  try {
+    const response = await fetch(
+      `${TMDB_CONFIG.BASE_URL}/account/21975759/favorite`,
+      options
+    );
+    if (!response.ok) {
+      //@ts-ignore
+      throw new Error("Failed the added movie", response.statusText);
+    }
+    const data = await response.json();
+    return data.results;
+  } catch (err) {
+    throw err;
+  }
+};
+export const removeFavoriteList = async (media_id: string) => {
+  const options = {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+      Authorization: `Bearer ${process.env.EXPO_PUBLIC_MOVIE_API_KEY}`,
+    },
+    body: JSON.stringify({
+      media_type: "movie",
+      media_id: media_id,
+      favorite: false,
+    }),
+  };
+  try {
+    const response = await fetch(
+      `${TMDB_CONFIG.BASE_URL}/account/21975759/favorite`,
+      options
+    );
+    if (!response.ok) {
+      //@ts-ignore
+      throw new Error("Failed the added movie", response.statusText);
+    }
+    const data = await response.json();
+    return data.results;
+  } catch (err) {
+    throw err;
+  }
+};

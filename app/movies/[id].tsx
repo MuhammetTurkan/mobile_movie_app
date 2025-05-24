@@ -6,10 +6,15 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import useFetch from "@/services/useFetch";
-import { fetchMovieDetails } from "@/services/api";
+import {
+  addFavoriteList,
+  fetchMovieDetails,
+  removeFavoriteList,
+} from "@/services/api";
+import { TMDB_CONFIG } from "@/services/api";
 import { icons } from "@/constants/icons";
 import Ionicon from "@expo/vector-icons/Ionicons";
 
@@ -29,10 +34,61 @@ const MovieInfo = ({ label, value }: MovieInfoProps) => (
 
 export default function MovieDetails() {
   const { id } = useLocalSearchParams();
+  const [isOnList, setIsOnList] = useState(false);
+  const [favoriteMovies, setMovies] = useState<MovieDetails[] | null>(null);
+
+  const togglePress = useCallback(
+    (movie_id: string) => {
+      if (isOnList) {
+        removeFavoriteList(movie_id);
+        setIsOnList(!isOnList);
+      } else {
+        addFavoriteList(movie_id);
+        setIsOnList(!isOnList);
+      }
+    },
+    [isOnList]
+  );
 
   const { data: movie, loading } = useFetch(() =>
     fetchMovieDetails(id as string)
   );
+
+  useEffect(() => {
+    async function fetchFavorite() {
+      try {
+        const response = await fetch(
+          `${TMDB_CONFIG.BASE_URL}/account/21975759/favorite/movies?api_key=${TMDB_CONFIG.API_KEY}`,
+          {
+            method: "GET",
+            headers: TMDB_CONFIG.headers,
+          }
+        );
+        if (!response.ok) {
+          //@ts-ignore
+          throw new Error("Failed the fetch movie ", response.statusText);
+        }
+
+        const data = await response.json();
+        setMovies(data.results);
+      } catch (err) {
+        console.log(err);
+        throw err;
+      }
+    }
+    if (favoriteMovies == null) {
+      fetchFavorite();
+    } else {
+      if (movie != null) {
+        for (let index = 0; index < favoriteMovies.length; index++) {
+          if (favoriteMovies[index].id == movie.id) {
+            setIsOnList(true);
+            break;
+          }
+        }
+      }
+    }
+  }, [setMovies, favoriteMovies]);
 
   return (
     <View className="flex-1 bg-primary">
@@ -51,7 +107,26 @@ export default function MovieDetails() {
           />
         </View>
         <View className="flex-col items-start justify-center mt-5 px-5">
-          <Text className="text-white font-bold text-xl">{movie?.title}</Text>
+          <View className="flex-row items-center justify-between w-full">
+            <Text className="text-white font-bold text-xl w-[50%]">
+              {movie?.title}
+            </Text>
+            <TouchableOpacity
+              className="bg-slate-500 px-2 py-2 rounded-xl mt-1"
+              onPress={() => togglePress(movie?.id as any)}
+            >
+              {isOnList ? (
+                <Text className="text-white font-bold text-md">
+                  Remove the Favorite List
+                </Text>
+              ) : (
+                <Text className="text-white font-bold text-md">
+                  Add the Favorite List
+                </Text>
+              )}
+            </TouchableOpacity>
+          </View>
+
           <View className="flex-row items-center gap-x-1 mt-2">
             <Text className="text-light-200 text-sm">
               {movie?.release_date.split("-")[0]} {movie?.runtime}m
