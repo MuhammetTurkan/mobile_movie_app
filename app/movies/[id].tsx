@@ -174,16 +174,16 @@ export default function MovieDetails() {
       </ScrollView>
       <TouchableOpacity
         onPress={router.back}
-        className="flex-row justify-center items-center bg-sky-600 absolute bottom-10 right-0 left-0 py-3 mx-4 rounded-xl"
+        className="flex-row justify-center items-center bg-sky-600 absolute top-12 left-3 py-2 px-3 rounded-full"
       >
         <Ionicon
           color={"white"}
-          size={22}
-          className="mr-1"
+          size={19}
+          className="mr-2"
           name="arrow-back-sharp"
         />
 
-        <Text className="text-white text-lg">Go Back</Text>
+        <Text className="text-white text-lg">Back</Text>
       </TouchableOpacity>
     </View>
   );
