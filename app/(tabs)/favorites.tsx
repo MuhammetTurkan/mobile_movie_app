@@ -22,11 +22,12 @@ export default function Favorites() {
   const router = useRouter();
   const [refreshing, setRefreshing] = useState(false);
   const [refreshData, setRefreshData] = useState<any | null>(null);
-  const [isModal, setModal] = useState(true);
 
-  const { data: favoriteMovies, loading: moviesLoading } = useFetch(() =>
-    fetchFavoriteMovies("21975759")
-  );
+  const {
+    data: favoriteMovies,
+    loading: moviesLoading,
+    refetch: loadMovies,
+  } = useFetch(() => fetchFavoriteMovies("21975759"));
 
   async function onRefresh() {
     setRefreshing(true);
@@ -45,29 +46,15 @@ export default function Favorites() {
       throw err;
     }
     setRefreshing(false);
-    setModal(false);
   }
 
-  const toggleModalVisible = useCallback(() => {
-    setModal(false);
-  }, [setModal, isModal]);
+  setTimeout(async () => {
+    await loadMovies();
+  }, 2000);
 
   return (
     <View className="bg-primary flex-1">
       <Image source={images.bg} className="absolute w-full z-0" />
-      {isModal && (
-        <View className="absolute z-10 top-28 right-0 left-0 flex flex-row justify-between items-center py-1 px-3 mx-4 bg-[#7EACB5] rounded-xl">
-          <Text className="text-white text-sm">
-            Drag screen to refresh the list.
-          </Text>
-          <TouchableOpacity
-            className="p-1.5 rounded-full bg-[#FFF4EA]"
-            onPress={toggleModalVisible}
-          >
-            <Ionicons name="close-outline" size={18} color={"red"} />
-          </TouchableOpacity>
-        </View>
-      )}
 
       <ScrollView
         className="flex-1 px-5"
