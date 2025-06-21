@@ -74,7 +74,7 @@ export const fetchTopRatedMovies = async (): Promise<Movie | null> => {
 
 export const fetchFavoriteMovies = async (
   account_id: string
-): Promise<Movie> => {
+): Promise<Movie[]> => {
   try {
     const response = await fetch(
       `${TMDB_CONFIG.BASE_URL}/account/${account_id}/favorite/movies?api_key=${TMDB_CONFIG.API_KEY}`,
@@ -86,7 +86,9 @@ export const fetchFavoriteMovies = async (
 
     if (!response.ok) {
       //@ts-ignore
-      throw new Error("Failed the fetch movie", response.statusText);
+      throw new Error(
+        `Failed to fetch movie: ${response.status} ${response.statusText}`
+      );
     }
 
     const data = await response.json();
