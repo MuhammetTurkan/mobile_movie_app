@@ -36,7 +36,7 @@ const MovieInfo = ({ label, value }: MovieInfoProps) => (
 
 export default function MovieDetails() {
   const { id } = useLocalSearchParams();
-  const [isOnList, setIsOnList] = useState(false);
+  const [isOnList, setIsOnList] = useState<boolean | null>(null);
   const [favoriteMovies, setMovies] = useState<MovieDetails[] | null>(null);
 
   const togglePress = useCallback(
@@ -98,6 +98,7 @@ export default function MovieDetails() {
       fetchFavorite();
     } else {
       if (movie != null) {
+        setIsOnList(false);
         for (let index = 0; index < favoriteMovies.length; index++) {
           if (favoriteMovies[index].id == movie.id) {
             setIsOnList(true);
@@ -139,20 +140,24 @@ export default function MovieDetails() {
                 <Text className="text-white font-bold text-xl w-[50%]">
                   {movie?.title}
                 </Text>
-                <TouchableOpacity
-                  className="bg-slate-500 px-2 py-2 rounded-xl mt-1"
-                  onPress={() => togglePress(movie?.id as any)}
-                >
-                  {isOnList ? (
-                    <Text className="text-white font-bold text-md">
-                      Remove the Favorite List
-                    </Text>
-                  ) : (
-                    <Text className="text-white font-bold text-md">
-                      Add the Favorite List
-                    </Text>
-                  )}
-                </TouchableOpacity>
+                {isOnList == null ? (
+                  <></>
+                ) : (
+                  <TouchableOpacity
+                    className="bg-slate-500 px-2 py-2 rounded-xl mt-1"
+                    onPress={() => togglePress(movie?.id as any)}
+                  >
+                    {isOnList ? (
+                      <Text className="text-white font-bold text-md">
+                        Remove the Favorite List
+                      </Text>
+                    ) : (
+                      <Text className="text-white font-bold text-md">
+                        Add the Favorite List
+                      </Text>
+                    )}
+                  </TouchableOpacity>
+                )}
               </View>
 
               <View className="flex-row items-center gap-x-1 mt-2">
