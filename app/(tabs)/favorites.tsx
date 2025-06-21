@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useState, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import useFetch from "@/services/useFetch";
 import MovieCard from "@/components/MovieCard";
 import { fetchFavoriteMovies } from "@/services/api";
@@ -29,6 +30,12 @@ export default function Favorites() {
     refetch: loadMovies,
   } = useFetch(() => fetchFavoriteMovies("21975759"));
 
+  useFocusEffect(
+    useCallback(() => {
+      loadMovies();
+    }, [loadMovies])
+  );
+
   async function onRefresh() {
     setRefreshing(true);
     try {
@@ -47,10 +54,6 @@ export default function Favorites() {
     }
     setRefreshing(false);
   }
-
-  setTimeout(async () => {
-    await loadMovies();
-  }, 2000);
 
   return (
     <View className="bg-primary flex-1">
