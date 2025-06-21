@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
+import Toast from "react-native-toast-message";
 import { router, useLocalSearchParams } from "expo-router";
 import useFetch from "@/services/useFetch";
 import {
@@ -43,9 +44,23 @@ export default function MovieDetails() {
       if (isOnList) {
         removeFavoriteList(movie_id);
         setIsOnList(!isOnList);
+
+        Toast.show({
+          type: "info",
+          text1: "Removed from Favorities",
+          text2: "The movie has been removed from your favorities list.",
+          position: "bottom",
+        });
       } else {
         addFavoriteList(movie_id);
         setIsOnList(!isOnList);
+
+        Toast.show({
+          type: "success",
+          text1: "Added to Favorities",
+          text2: "The movie has been added to your favorities list.",
+          position: "bottom",
+        });
       }
     },
     [isOnList]
@@ -104,7 +119,7 @@ export default function MovieDetails() {
           <ActivityIndicator
             size={"large"}
             color={"#0000ff"}
-            className="mt-10 self-center"
+            className="mt-16 self-center"
           />
         ) : movieError ? (
           <Text>Error : {movieError.message}</Text>
