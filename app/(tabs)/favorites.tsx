@@ -6,35 +6,38 @@ import {
   ScrollView,
   FlatList,
   RefreshControl,
-  TouchableOpacity,
 } from "react-native";
-import React, { useState, useCallback } from "react";
-import { useFocusEffect } from "@react-navigation/native";
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import useFetch from "@/services/useFetch";
 import MovieCard from "@/components/MovieCard";
 import { fetchFavoriteMovies } from "@/services/api";
 import { TMDB_CONFIG } from "@/services/api";
 import { icons } from "@/constants/icons";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { images } from "@/constants/images";
-import { useRouter } from "expo-router";
+import * as Animatable from "react-native-animatable";
 
 export default function Favorites() {
-  const router = useRouter();
   const [refreshing, setRefreshing] = useState(false);
   const [refreshData, setRefreshData] = useState<any | null>(null);
+  const isFocused = useIsFocused();
+  const animRef = useRef<any | null>(null);
 
-  const {
-    data: favoriteMovies,
-    loading: moviesLoading,
-    refetch: loadMovies,
-  } = useFetch(() => fetchFavoriteMovies("21975759"));
+  const { data: favoriteMovies, refetch: loadMovies } = useFetch(() =>
+    fetchFavoriteMovies("21975759")
+  );
 
   useFocusEffect(
     useCallback(() => {
       loadMovies();
     }, [loadMovies])
   );
+
+  useEffect(() => {
+    if (isFocused && animRef.current) {
+      animRef.current.animate("fadeInUp", 500);
+    }
+  }, [isFocused]);
 
   async function onRefresh() {
     setRefreshing(true);
@@ -79,20 +82,31 @@ export default function Favorites() {
           <Text className="text-lg text-white font-bold mt-5 mb-3">
             Favorite Movies
           </Text>
-          <FlatList
-            data={refreshData == null ? favoriteMovies : refreshData}
-            renderItem={({ item }) => <MovieCard {...item} />}
-            keyExtractor={(item) => item.id.toString()}
-            numColumns={3}
-            columnWrapperStyle={{
-              justifyContent: "flex-start",
-              gap: 20,
-              paddingRight: 5,
-              marginBottom: 10,
-            }}
-            className="mt-2"
-            scrollEnabled={false}
-          />
+          <Animatable.View ref={animRef} className="flex-1">
+            <FlatList
+              data={refreshData == null ? favoriteMovies : refreshData}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={({ item, index }) => (
+                <Animatable.View
+                  duration={500}
+                  animation={"fadeInUp"}
+                  delay={index * 200}
+                  className="w-[30%]"
+                >
+                  <MovieCard {...item} />
+                </Animatable.View>
+              )}
+              numColumns={3}
+              columnWrapperStyle={{
+                justifyContent: "flex-start",
+                gap: 20,
+                paddingRight: 5,
+                marginBottom: 10,
+              }}
+              className="mt-2"
+              scrollEnabled={false}
+            />
+          </Animatable.View>
         </View>
       </ScrollView>
     </View>
