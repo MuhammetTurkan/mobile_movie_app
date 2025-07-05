@@ -48,7 +48,11 @@ export default function Search() {
         data={movies}
         numColumns={3}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <MovieCard {...item} />}
+        renderItem={({ item }) => (
+          <View className="w-[30%]">
+            <MovieCard {...item} />
+          </View>
+        )}
         className="px-5"
         columnWrapperStyle={{
           justifyContent: "center",

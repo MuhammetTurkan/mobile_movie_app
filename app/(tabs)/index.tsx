@@ -78,7 +78,11 @@ export default function Index() {
 
               <FlatList
                 data={movies}
-                renderItem={({ item }) => <MovieCard {...item} />}
+                renderItem={({ item }) => (
+                  <View className="w-[30%]">
+                    <MovieCard {...item} />
+                  </View>
+                )}
                 keyExtractor={(item) => item.id.toString()}
                 numColumns={3}
                 columnWrapperStyle={{
