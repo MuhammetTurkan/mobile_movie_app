@@ -10,17 +10,16 @@ interface TabIconProps {
 }
 
 const TabIcon = ({ focused, title, iconName }: TabIconProps) => {
-  if (focused) {
-    return (
-      <View className="bg-indigo-500 flex-1 flex-row justify-center items-center w-full overflow-hidden min-w-[112px] min-h-16 rounded-full mt-3">
-        <Icon name={iconName} size={26} color={"#F5EEDD"} />
-        <Text className="ms-1 text-[13px] text-[#F5EEDD]">{title}</Text>
-      </View>
-    );
-  }
   return (
-    <View className="size-full flex-1 flex-row justify-center items-center mt-2">
-      <Icon name={iconName} size={23} color={"#F5EEDD"} />
+    <View
+      className={`${
+        focused ? `bg-indigo-500` : `bg-transparent`
+      } flex-1 flex-row justify-center items-center w-full overflow-hidden min-w-[112px] min-h-16 rounded-full mt-3`}
+    >
+      <Icon name={iconName} size={26} color={"#F5EEDD"} />
+      {focused && (
+        <Text className="ms-1 text-[13px] text-[#F5EEDD]">{title}</Text>
+      )}
     </View>
   );
 };
