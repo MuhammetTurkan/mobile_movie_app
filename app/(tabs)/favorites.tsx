@@ -83,29 +83,39 @@ export default function Favorites() {
             Favorite Movies
           </Text>
           <Animatable.View ref={animRef} className="flex-1">
-            <FlatList
-              data={refreshData == null ? favoriteMovies : refreshData}
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={({ item, index }) => (
-                <Animatable.View
-                  duration={500}
-                  animation={"fadeInUp"}
-                  delay={index * 200}
-                  className="w-[30%]"
-                >
-                  <MovieCard {...item} />
-                </Animatable.View>
-              )}
-              numColumns={3}
-              columnWrapperStyle={{
-                justifyContent: "flex-start",
-                gap: 20,
-                paddingRight: 5,
-                marginBottom: 10,
-              }}
-              className="mt-2"
-              scrollEnabled={false}
-            />
+            {favoriteMovies?.length == 0 ? (
+              <>
+                <View className="bg-indigo-500 mx-3 py-4 rounded-lg items-center">
+                  <Text className="text-white text-xl text-start">
+                    Favorites list is empty
+                  </Text>
+                </View>
+              </>
+            ) : (
+              <FlatList
+                data={refreshData == null ? favoriteMovies : refreshData}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item, index }) => (
+                  <Animatable.View
+                    duration={500}
+                    animation={"fadeInUp"}
+                    delay={index * 200}
+                    className="w-[30%]"
+                  >
+                    <MovieCard {...item} />
+                  </Animatable.View>
+                )}
+                numColumns={3}
+                columnWrapperStyle={{
+                  justifyContent: "flex-start",
+                  gap: 20,
+                  paddingRight: 5,
+                  marginBottom: 10,
+                }}
+                className="mt-2"
+                scrollEnabled={false}
+              />
+            )}
           </Animatable.View>
         </View>
       </ScrollView>
