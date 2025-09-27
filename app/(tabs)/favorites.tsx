@@ -16,12 +16,14 @@ import { TMDB_CONFIG } from "@/services/api";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import * as Animatable from "react-native-animatable";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function Favorites() {
   const [refreshing, setRefreshing] = useState(false);
   const [refreshData, setRefreshData] = useState<any | null>(null);
   const isFocused = useIsFocused();
   const animRef = useRef<any | null>(null);
+  const { theme } = useTheme();
 
   const { data: favoriteMovies, refetch: loadMovies } = useFetch(() =>
     fetchFavoriteMovies("21975759")
@@ -59,7 +61,7 @@ export default function Favorites() {
   }
 
   return (
-    <View className="bg-primary flex-1">
+    <View className={`flex-1 bg-primary-${theme}`}>
       <Image source={images.bg} className="absolute w-full z-0" />
 
       <ScrollView

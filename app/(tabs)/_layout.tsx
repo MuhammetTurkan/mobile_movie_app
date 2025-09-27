@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 import Icon from "@expo/vector-icons/MaterialIcons";
+import { useTheme } from "@/context/ThemeContext";
 
 interface TabIconProps {
   focused: boolean;
@@ -10,13 +11,18 @@ interface TabIconProps {
 }
 
 const TabIcon = ({ focused, title, iconName }: TabIconProps) => {
+  const { colors } = useTheme();
   return (
     <View
       className={`${
         focused ? `bg-indigo-500` : `bg-transparent`
       } flex-1 flex-row justify-center items-center w-full overflow-hidden min-w-[112px] min-h-16 rounded-full mt-3`}
     >
-      <Icon name={iconName} size={26} color={"#F5EEDD"} />
+      <Icon
+        name={iconName}
+        size={26}
+        color={focused ? "#F5EEDD" : colors.tabIcon}
+      />
       {focused && (
         <Text className="ms-1 text-[13px] text-[#F5EEDD]">{title}</Text>
       )}
@@ -25,10 +31,24 @@ const TabIcon = ({ focused, title, iconName }: TabIconProps) => {
 };
 
 export default function _Layout() {
+  const { theme, toggleTheme, colors } = useTheme();
+
   return (
     <Tabs
       screenOptions={{
-        headerShown: false,
+        headerStyle: {
+          height: 0,
+        },
+        headerRight: () => (
+          <TouchableOpacity
+            onPress={toggleTheme}
+            className="mr-5 p-2 bg-sky-900 rounded-full absolute top-4 right-2"
+          >
+            <Text className="text-white text-base">
+              {theme === "dark" ? "☀️" : "🌙"}
+            </Text>
+          </TouchableOpacity>
+        ),
         tabBarShowLabel: false,
         tabBarItemStyle: {
           width: "100%",
@@ -37,7 +57,7 @@ export default function _Layout() {
           alignItems: "center",
         },
         tabBarStyle: {
-          backgroundColor: "#0f0d23",
+          backgroundColor: colors.tabBarBackground,
           borderRadius: 50,
           marginHorizontal: 20,
           marginBottom: 36,

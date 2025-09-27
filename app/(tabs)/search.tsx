@@ -13,9 +13,11 @@ import { fetchMovies } from "@/services/api";
 import MovieCard from "@/components/MovieCard";
 import { icons } from "@/constants/icons";
 import SearchBar from "@/components/SearchBar";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function Search() {
   const [searchQuery, setSearchQuery] = useState("");
+  const { theme } = useTheme();
 
   const {
     data: movies,
@@ -37,7 +39,7 @@ export default function Search() {
   }, [searchQuery]);
 
   return (
-    <View className="flex-1 bg-primary">
+    <View className={`flex-1 bg-primary-${theme}`}>
       <Image
         source={images.bg}
         className="absolute flex-1 w-full z-0"
