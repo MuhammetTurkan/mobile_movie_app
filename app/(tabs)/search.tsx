@@ -14,10 +14,12 @@ import MovieCard from "@/components/MovieCard";
 import { icons } from "@/constants/icons";
 import SearchBar from "@/components/SearchBar";
 import { useTheme } from "@/context/ThemeContext";
+import { useThemeStyled } from "@/hooks/useThemeStyled";
 
 export default function Search() {
   const [searchQuery, setSearchQuery] = useState("");
   const { theme } = useTheme();
+  const styles = useThemeStyled();
 
   const {
     data: movies,
@@ -39,7 +41,7 @@ export default function Search() {
   }, [searchQuery]);
 
   return (
-    <View className={`flex-1 bg-primary-${theme}`}>
+    <View style={styles.mainContainer}>
       <Image
         source={images.bg}
         className="absolute flex-1 w-full z-0"

@@ -19,6 +19,8 @@ import {
 import { TMDB_CONFIG } from "@/services/api";
 import { icons } from "@/constants/icons";
 import Ionicon from "@expo/vector-icons/Ionicons";
+import { useThemeStyled } from "@/hooks/useThemeStyled";
+import { useTheme } from "@/context/ThemeContext";
 
 interface MovieInfoProps {
   label: string;
@@ -38,6 +40,8 @@ export default function MovieDetails() {
   const { id } = useLocalSearchParams();
   const [isOnList, setIsOnList] = useState<boolean | null>(null);
   const [favoriteMovies, setMovies] = useState<MovieDetails[] | null>(null);
+  const { theme, toggleTheme } = useTheme();
+  const styles = useThemeStyled();
 
   const togglePress = useCallback(
     (movie_id: string) => {
@@ -110,7 +114,15 @@ export default function MovieDetails() {
   }, [setMovies, favoriteMovies]);
 
   return (
-    <View className="flex-1 bg-primary">
+    <View style={styles.mainContainer}>
+      <TouchableOpacity
+        onPress={toggleTheme}
+        className="mr-5 p-2 bg-sky-900 rounded-full absolute top-14 right-2 z-10"
+      >
+        <Text className="text-white text-base">
+          {theme === "dark" ? "☀️" : "🌙"}
+        </Text>
+      </TouchableOpacity>
       <ScrollView
         contentContainerStyle={{
           paddingBottom: 100,

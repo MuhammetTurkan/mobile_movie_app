@@ -5,17 +5,14 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
-import { darkColors, lightColors } from "./theme";
+import { darkColors, lightColors, ThemeColors } from "./theme";
 import { setCustomNativeWindColors } from "./themeUtils";
 
 type ThemeType = "light" | "dark";
 
 interface ThemeContextType {
   theme: ThemeType;
-  colors: {
-    tabBarBackground: string;
-    tabIcon: string;
-  };
+  colors: ThemeColors;
   toggleTheme: () => void;
 }
 

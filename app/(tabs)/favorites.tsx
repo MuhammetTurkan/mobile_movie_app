@@ -17,6 +17,7 @@ import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import * as Animatable from "react-native-animatable";
 import { useTheme } from "@/context/ThemeContext";
+import { useThemeStyled } from "@/hooks/useThemeStyled";
 
 export default function Favorites() {
   const [refreshing, setRefreshing] = useState(false);
@@ -24,6 +25,7 @@ export default function Favorites() {
   const isFocused = useIsFocused();
   const animRef = useRef<any | null>(null);
   const { theme } = useTheme();
+  const styles = useThemeStyled();
 
   const { data: favoriteMovies, refetch: loadMovies } = useFetch(() =>
     fetchFavoriteMovies("21975759")
@@ -61,7 +63,7 @@ export default function Favorites() {
   }
 
   return (
-    <View className={`flex-1 bg-primary-${theme}`}>
+    <View style={styles.mainContainer}>
       <Image source={images.bg} className="absolute w-full z-0" />
 
       <ScrollView

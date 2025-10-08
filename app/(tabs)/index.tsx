@@ -15,10 +15,12 @@ import { fetchMovies, fetchTopRatedMovies } from "@/services/api";
 import MovieCard from "@/components/MovieCard";
 import TopMovieCard from "@/components/TopMovieCard";
 import { useTheme } from "@/context/ThemeContext";
+import { useThemeStyled } from "@/hooks/useThemeStyled";
 
 export default function Index() {
   const router = useRouter();
   const { theme } = useTheme();
+  const styles = useThemeStyled();
 
   const {
     data: movies,
@@ -31,7 +33,7 @@ export default function Index() {
   );
 
   return (
-    <View className={`flex-1 bg-primary-${theme}`}>
+    <View style={styles.mainContainer}>
       <Image source={images.bg} className="absolute w-full z-0" />
       <ScrollView
         className="flex-1 px-5"
