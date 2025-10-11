@@ -222,7 +222,7 @@ export default function MovieDetails() {
       </ScrollView>
       <TouchableOpacity
         onPress={router.back}
-        className="flex-row justify-center items-center bg-sky-600 absolute top-12 left-3 py-2 px-3 rounded-full"
+        className="flex-row justify-center items-center bg-sky-900 absolute top-12 left-3 py-2 px-3 rounded-full"
       >
         <Ionicon
           color={"white"}
