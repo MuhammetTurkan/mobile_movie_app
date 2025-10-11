@@ -9,5 +9,15 @@ export const useThemeStyled = () => {
       flex: 1,
       backgroundColor: colors.primaryBackground,
     },
+
+    searchBarContainer: {
+      backgroundColor: colors.searchBarBackground,
+    },
+
+    input: {
+      flex: 1,
+      marginLeft: 8,
+      color: colors.inputText,
+    },
   });
 };

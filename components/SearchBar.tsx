@@ -1,14 +1,9 @@
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import React, { useState } from "react";
+import { Image, TextInput, TouchableOpacity, View } from "react-native";
+import React from "react";
 import { icons } from "@/constants/icons";
 import Icon from "@expo/vector-icons/FontAwesome";
+import { useTheme } from "@/context/ThemeContext";
+import { useThemeStyled } from "@/hooks/useThemeStyled";
 
 interface Props {
   placeholder: string;
@@ -25,20 +20,26 @@ export default function SearchBar({
   value,
   onChangeText,
 }: Props) {
+  const { colors } = useTheme();
+  const styles = useThemeStyled();
+
   return (
-    <View className="flex-row rounded-full items-center bg-dark-200 px-5 py-5">
+    <View
+      className="flex-row rounded-full items-center px-5 py-5"
+      style={styles.searchBarContainer}
+    >
       <Image
         source={icons.search}
         className="size-5"
         resizeMode="contain"
-        tintColor={"#ab8bff"}
+        tintColor={colors.searchIcon}
       />
       <TextInput
         onPress={onPress}
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        placeholderTextColor={"#a8b5db"}
+        placeholderTextColor={colors.placeholderTextColor}
         style={styles.input}
       />
       {value?.trim() && (
@@ -49,11 +50,3 @@ export default function SearchBar({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  input: {
-    flex: 1,
-    marginLeft: 8,
-    color: "white",
-  },
-});
