@@ -65,7 +65,7 @@ export default function _Layout() {
           position: "absolute",
           overflow: "hidden",
           borderWidth: 1,
-          borderColor: "#0f0d23",
+          borderColor: colors.tabBarBorder,
         },
       }}
     >
