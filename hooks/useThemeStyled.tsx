@@ -10,6 +10,17 @@ export const useThemeStyled = () => {
       backgroundColor: colors.primaryBackground,
     },
 
+    primaryText: {
+      color: colors.primaryTextColor,
+    },
+    secondaryText: {
+      color: colors.secondaryTextColor,
+    },
+
+    emptyListContainer: {
+      backgroundColor: colors.emptyListBackground,
+    },
+
     searchBarContainer: {
       backgroundColor: colors.searchBarBackground,
     },

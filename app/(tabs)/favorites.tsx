@@ -1,5 +1,4 @@
 import {
-  StyleSheet,
   Text,
   View,
   Image,
@@ -16,7 +15,6 @@ import { TMDB_CONFIG } from "@/services/api";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import * as Animatable from "react-native-animatable";
-import { useTheme } from "@/context/ThemeContext";
 import { useThemeStyled } from "@/hooks/useThemeStyled";
 
 export default function Favorites() {
@@ -24,7 +22,6 @@ export default function Favorites() {
   const [refreshData, setRefreshData] = useState<any | null>(null);
   const isFocused = useIsFocused();
   const animRef = useRef<any | null>(null);
-  const { theme } = useTheme();
   const styles = useThemeStyled();
 
   const { data: favoriteMovies, refetch: loadMovies } = useFetch(() =>
@@ -83,14 +80,23 @@ export default function Favorites() {
       >
         <Image source={icons.logo} className="w-12 h-10 mt-20 mb-1 mx-auto" />
         <View className="flex-1 mt-5">
-          <Text className="text-lg text-white font-bold mt-5 mb-3">
+          <Text
+            className="text-lg font-bold mt-5 mb-3"
+            style={styles.primaryText}
+          >
             Favorite Movies
           </Text>
           <Animatable.View ref={animRef} className="flex-1">
             {favoriteMovies?.length == 0 ? (
               <>
-                <View className="bg-indigo-500 mx-3 py-4 rounded-lg items-center">
-                  <Text className="text-white text-xl text-start">
+                <View
+                  className="mx-3 py-4 rounded-lg items-center"
+                  style={styles.emptyListContainer}
+                >
+                  <Text
+                    className="text-xl text-start"
+                    style={styles.primaryText}
+                  >
                     Favorites list is empty
                   </Text>
                 </View>
@@ -126,5 +132,3 @@ export default function Favorites() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({});
