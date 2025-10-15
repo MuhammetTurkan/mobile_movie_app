@@ -10,6 +10,9 @@ export const darkColors = {
   tabBarBorder: "#0f0d23",
   tabIcon: "#F5EEDD",
 
+  movieStarBackground: "#0F0D23",
+  movieInfoHeader: "#D6C6FF",
+
   searchBarBackground: "#0F0D23",
   placeholderTextColor: "#a8b5db",
   searchIcon: "#ab8bff",
@@ -29,6 +32,9 @@ export const lightColors = {
   tabFocusedBackground: "#96A78D",
   tabBarBorder: "#FAEBCD",
   tabIcon: "#0f0d23",
+
+  movieStarBackground: "#D9E9CF",
+  movieInfoHeader: "#5D866C",
 
   searchBarBackground: "#D9E9CF",
   placeholderTextColor: "#273F4F",

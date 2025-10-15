@@ -21,6 +21,13 @@ export const useThemeStyled = () => {
       backgroundColor: colors.emptyListBackground,
     },
 
+    movieStarContainer: {
+      backgroundColor: colors.movieStarBackground,
+    },
+    movieInfoText: {
+      color: colors.movieInfoHeader,
+    },
+
     searchBarContainer: {
       backgroundColor: colors.searchBarBackground,
     },

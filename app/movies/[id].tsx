@@ -25,12 +25,18 @@ import { useTheme } from "@/context/ThemeContext";
 interface MovieInfoProps {
   label: string;
   value?: string | number | null;
+  styles: any;
 }
 
-const MovieInfo = ({ label, value }: MovieInfoProps) => (
+const MovieInfo = ({ label, value, styles }: MovieInfoProps) => (
   <View className="flex-col items-start justify-center mt-5">
-    <Text className="text-light-100 text-sm font-normal">{label}</Text>
-    <Text className="text-light-300 text-sm font-semibold text-justify mt-1">
+    <Text className="text-sm font-normal" style={styles.movieInfoText}>
+      {label}
+    </Text>
+    <Text
+      className=" text-sm font-semibold text-justify mt-1"
+      style={styles.secondaryText}
+    >
       {value || `N/A`}
     </Text>
   </View>
@@ -149,7 +155,10 @@ export default function MovieDetails() {
             </View>
             <View className="flex-col items-start justify-center mt-5 px-5">
               <View className="flex-row items-center justify-between w-full">
-                <Text className="text-white font-bold text-xl w-[50%]">
+                <Text
+                  className=" font-bold text-xl w-[50%]"
+                  style={styles.primaryText}
+                >
                   {movie?.title}
                 </Text>
                 {isOnList == null ? (
@@ -173,32 +182,42 @@ export default function MovieDetails() {
               </View>
 
               <View className="flex-row items-center gap-x-1 mt-2">
-                <Text className="text-light-200 text-sm">
+                <Text className="text-sm" style={styles.secondaryText}>
                   {movie?.release_date.split("-")[0]} {movie?.runtime}m
                 </Text>
               </View>
-              <View className="flex-row items-center bg-dark-100 px-2 py-1 rounded-md gap-x-1 mt-2">
+              <View
+                className="flex-row items-center px-2 py-1 rounded-md gap-x-1 mt-2"
+                style={styles.movieStarContainer}
+              >
                 <Image source={icons.star} className="size-4" />
-                <Text className="text-white font-bold text-sm">
+                <Text className="font-bold text-sm" style={styles.primaryText}>
                   {Math.round(movie?.vote_average ?? 0)} / 10
                 </Text>
-                <Text className="text-light-200 text-sm">
+                <Text className="text-sm" style={styles.secondaryText}>
                   ({movie?.vote_count} votes)
                 </Text>
               </View>
-              <MovieInfo label="Overview" value={movie?.overview} />
+              <MovieInfo
+                label="Overview"
+                value={movie?.overview}
+                styles={styles}
+              />
               <MovieInfo
                 label="Genres"
                 value={movie?.genres?.map((g) => g.name).join(` - `) || "N/A"}
+                styles={styles}
               />
               <View className="flex flex-row justify-between w-1/2">
                 <MovieInfo
                   label="Budget"
                   value={`$${movie?.budget / 1_000_000} millions`}
+                  styles={styles}
                 />
                 <MovieInfo
                   label="Revenue"
                   value={`$${Math.round(movie?.revenue) / 1_000_000}`}
+                  styles={styles}
                 />
               </View>
               <MovieInfo
@@ -207,6 +226,7 @@ export default function MovieDetails() {
                   movie?.production_companies.map((c) => c.name).join(" - ") ||
                   `N/A`
                 }
+                styles={styles}
               />
               <MovieInfo
                 label="Production Countries"
@@ -215,6 +235,7 @@ export default function MovieDetails() {
                     .map((co) => co.name)
                     .join(" - ") || `N/A`
                 }
+                styles={styles}
               />
             </View>
           </>
