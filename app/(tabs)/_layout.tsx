@@ -14,9 +14,10 @@ const TabIcon = ({ focused, title, iconName }: TabIconProps) => {
   const { colors } = useTheme();
   return (
     <View
-      className={`${
-        focused ? `bg-indigo-500` : `bg-transparent`
-      } flex-1 flex-row justify-center items-center w-full overflow-hidden min-w-[112px] min-h-16 rounded-full mt-3`}
+      style={{
+        backgroundColor: focused ? colors.tabFocusedBackground : "transparent",
+      }}
+      className={`flex-1 flex-row justify-center items-center w-full overflow-hidden min-w-[112px] min-h-16 rounded-full mt-3`}
     >
       <Icon
         name={iconName}

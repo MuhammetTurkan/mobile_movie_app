@@ -61,7 +61,10 @@ export default function Index() {
             />
 
             <>
-              <Text className="text-lg text-white font-bold mt-5 mb-3">
+              <Text
+                className="text-lg font-bold mt-5 mb-3"
+                style={styles.primaryText}
+              >
                 Top Rated Movies
               </Text>
 
@@ -76,7 +79,10 @@ export default function Index() {
                 className="mb-4 mt-3"
                 ItemSeparatorComponent={() => <View className="w-4" />}
               />
-              <Text className="text-lg text-white font-bold mt-5 mb-3">
+              <Text
+                className="text-lg font-bold mt-5 mb-3"
+                style={styles.primaryText}
+              >
                 Latest Movies
               </Text>
 
