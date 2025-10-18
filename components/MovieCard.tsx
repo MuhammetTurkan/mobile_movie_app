@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "expo-router";
 import { icons } from "@/constants/icons";
 import { useThemeStyled } from "@/hooks/useThemeStyled";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function MovieCard({
   id,
@@ -11,6 +12,7 @@ export default function MovieCard({
   vote_average,
   release_date,
 }: Movie) {
+  const { colors } = useTheme();
   const styles = useThemeStyled();
 
   return (
@@ -20,7 +22,7 @@ export default function MovieCard({
           source={{
             uri: poster_path
               ? `https://image.tmdb.org/t/p/w500${poster_path}`
-              : `https://placehold.co/600x400/1a1a1a/ffffff.png`,
+              : `https://placehold.co/600x400/${colors.noPoster}/ffffff.png`,
           }}
           className="w-full h-52 rounded-lg"
           resizeMode="cover"

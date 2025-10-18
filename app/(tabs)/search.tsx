@@ -95,9 +95,9 @@ export default function Search() {
             )}
 
             {!loading && !error && searchQuery.trim() && movies?.length > 0 && (
-              <Text className="text-xl text-white font-bold">
+              <Text className="text-xl font-bold" style={styles.primaryText}>
                 Search Results for{" "}
-                <Text className="text-accent">{searchQuery}</Text>
+                <Text style={styles.searchQuery}>{searchQuery}</Text>
               </Text>
             )}
           </>

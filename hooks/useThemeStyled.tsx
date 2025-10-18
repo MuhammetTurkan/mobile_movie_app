@@ -32,6 +32,10 @@ export const useThemeStyled = () => {
       backgroundColor: colors.searchBarBackground,
     },
 
+    searchQuery: {
+      color: colors.searchQueryColor,
+    },
+
     input: {
       flex: 1,
       marginLeft: 8,
